@@ -2,7 +2,7 @@
 
 **Demo:** https://basemax.github.io/ShapesAlgorithm/demo.html
 
-## About Algorithm
+## About the algorithm
 
 In a shape(rectangle or square) with width `n` and length `m`, We want to know how many shapes there are with width and length `a` and `b`. We also want to know the remaining forms. For example, in the figure below, whose width and length are 10cm x 10cm, a shape with a width and length of 3 x 3 will be output as below:
 
