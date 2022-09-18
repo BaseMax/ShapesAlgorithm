@@ -142,7 +142,7 @@ class ShapeAlgorithm {
 
             // looking for possible boxs with `size` size
             // if there are undefiend with `size`, so we can generate a random color and fill that.
-            while(lookingForSize(size) === true) {}
+            while (lookingForSize(size) === true) {}
         }
     }
 
