@@ -91,8 +91,9 @@ class ShapeAlgorithm {
             for (let j = 0; j < this.matrix[i].length; j += this.biggest_box.w) {
                 if (j >= this.window.w || i >= this.window.h || j+this.biggest_box.w >= this.window.w || i+this.biggest_box.h >= this.window.h) break;
 
-                const color = this.randomColor();
                 this.labels[`${this.biggest_box.w}_${this.biggest_box.h}`] = 1;
+
+                const color = this.randomColor();
 
                 for (let k = 0; k < this.biggest_box.h; k++) {
                     for (let l = 0; l < this.biggest_box.w; l++) {
@@ -113,11 +114,12 @@ class ShapeAlgorithm {
             if (res !== false) {
                 // we found a rectangle with `size[0]` as width and `size[1]` as height in this.matrix (matrix) they are NULL fields
                 // now we should fill them with a color
-                const color = this.randomColor();
                 if (!this.labels[`${size[0]}_${size[1]}`]) {
                     this.labels[`${size[0]}_${size[1]}`] = Object.keys(this.labels).length + 1;
                 }
                 const key = this.labels[`${size[0]}_${size[1]}`];
+
+                const color = this.randomColor();
 
                 for (let i = 0; i < size[1]; i++) {
                     for (let j = 0; j < size[0]; j++) {
