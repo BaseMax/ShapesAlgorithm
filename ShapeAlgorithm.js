@@ -173,7 +173,7 @@ class ShapeAlgorithm {
         elm.innerHTML = this.print();
     }
 
-    getColors() {
+    getLabels() {
         return this.labels;
     }
 
@@ -181,19 +181,19 @@ class ShapeAlgorithm {
         return this.sizes;
     }
 
-    getMat() {
+    getMatrix() {
         return this.matrix;
     }
 
-    getMainBox() {
+    getWindow() {
         return this.window;
     }
 
-    getMaxBox() {
+    getBiggestBox() {
         return this.biggest_box;
     }
 
-    getMatSize() {
+    getMatrixSize() {
         return {
             w: this.matrix[0].length,
             h: this.matrix.length
