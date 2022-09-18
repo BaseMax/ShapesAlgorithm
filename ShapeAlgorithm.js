@@ -88,8 +88,8 @@ class ShapeAlgorithm {
     calculate() {
         // colorize all possible this.biggest_box.w * this.biggest_box.h items iterate
         for (let i = 0; i < this.matrix.length; i += this.biggest_box.h) {
-            for (let j = 0; j < this.matrix[i].length; j += this.biggest_box.w) {
-                if (j >= this.window.w || i >= this.window.h || j+this.biggest_box.w >= this.window.w || i+this.biggest_box.h >= this.window.h) break;
+            for (let j = 0; j < this.matrix[0].length; j += this.biggest_box.w) {
+                if (j > this.window.w || i > this.window.h || j + this.biggest_box.w > this.window.w || i + this.biggest_box.h > this.window.h) break;
 
                 this.labels[`${this.biggest_box.w}_${this.biggest_box.h}`] = 1;
 
