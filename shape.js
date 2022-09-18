@@ -106,12 +106,8 @@ const print = () => {
     console.log("</table>");
 };
 
-// init
-calculate();
-// print();
 
-function has_undefined_rectangle(width, height)
-{
+const has_undefined_rectangle = (width, height) => {
     console.log(MAT);
 
     for (let i = 0; i < MAT.length; i += height) {
@@ -152,7 +148,111 @@ function has_undefined_rectangle(width, height)
     }
 
     return false;
-}
+};
 
-console.log(has_undefined_rectangle(3, 1));
+const hasUndefinedRectangle2 = (width, height) => {
+    let h = 0;
+    let w = 2;
+
+    // for (let h = 0; h < MAT.length; h++) {
+    //     for (let w = 0; w < MAT[0].length; w++) {
+            // if (MAT[h][w] !== null) continue;
+            let hasUndefined = false;
+
+            let count_w = 1;
+            let count_h = 1;
+            while (count_w <= width) {
+                count_h = 1;
+                if (MAT[h][w + count_w -1] !== null) continue;
+                console.log("w: ", count_w, "<=", width, MAT[h][w + count_w -1]);
+
+                while (count_h <= height) {
+                    if (MAT[h + count_h -1][w + count_w -1] !== null) {
+                        hasUndefined = false;
+                        break;
+                    }
+                    console.log("h: ", count_h, "<=", height, MAT[h + count_h -1][w + count_w -1]);
+                    count_h++;
+                }
+
+                if (count_h - 1 !== height) {
+                    hasUndefined = false;
+                    break;
+                }
+                count_w++;
+
+                // while (count_h <= height) {
+                //     if (h + count_h >= MAT.length || w + count_w >= MAT[0].length) {
+                //         hasUndefined = false;
+                //         break;
+                //     }
+                //     if (MAT[h + count_h][w + count_w] !== null) {
+                //         hasUndefined = false;
+                //         break;
+                //     }
+                //     count_h++;
+                // }
+            }
+
+            console.log([count_h - 1, count_w - 1]);
+            if (count_h - 1 === height && count_w - 1 === width) {
+                return true;
+            }
+
+            // console.log([h, w], hasUndefined);
+            // if (hasUndefined === true) {
+            //     return true;
+            // }
+    //     }
+    // }
+
+    return false;
+};
+
+const cropMatrix = (w, h, width, height) => {
+    const arr = [];
+    for (let i = 0; i < height; i++) {
+        arr.push([]);
+        for (let j = 0; j < width; j++) {
+            if (MAT[h + i][w + j] === undefined) return null;
+            arr[i].push(MAT[h + i][w + j]);
+        }
+    }
+    return arr;
+};
+
+const hasUndefinedRectangle = (width, height) => {
+    for (let h = 0; h < MAT.length; h++) {
+        for (let w = 0; w < MAT[0].length; w++) {
+            if (MAT[h][w] !== null) continue;
+
+            const arr = cropMatrix(w, h, width, height);
+            if (arr === null) continue;
+            // console.log(arr);
+
+            // if all values in arr is null
+            if (arr.every((row) => row.every((value) => value === null))) {
+                return {
+                    x: w,
+                    y: h,
+                    sx: width,
+                    xy: height
+                };
+            }
+        }
+    }
+
+    return false;
+};
+
+// init
+calculate();
+// print();
+
+// console.log(has_undefined_rectangle(3, 1));
 // console.log(has_undefined_rectangle(1, 3));
+
+console.log( [2, 2], hasUndefinedRectangle(2, 2) ); // xx, xx
+console.log( [2, 4], hasUndefinedRectangle(2, 4) ); // xx, xx, xx, xx
+console.log( [2, 4], hasUndefinedRectangle(4, 2) ); // xxxx, xxxx
+console.log( [4, 2], hasUndefinedRectangle(2, 2) ); // xxxx, xxxx

@@ -82,14 +82,17 @@ const hasUndefinedRectangle = (width, height) => {
             if (matrix[h][w] !== null) continue;
 
             const arr = cropMatrix(w, h, width, height);
-            if (arr === null) {
-                continue;
-            }
+            if (arr === null) continue;
+            // console.log(arr);
 
             // if all values in arr is null
-            // console.log(arr);
             if (arr.every((row) => row.every((value) => value === null))) {
-                return true;
+                return {
+                    x: w,
+                    y: h,
+                    sx: width,
+                    xy: height
+                };
             }
         }
     }
@@ -100,5 +103,5 @@ const hasUndefinedRectangle = (width, height) => {
 console.log(matrix);
 // console.log( [2, 2], hasUndefinedRectangle(2, 2) ); // xx, xx
 // console.log( [2, 4], hasUndefinedRectangle(2, 4) ); // xx, xx, xx, xx
-console.log( [2, 4], hasUndefinedRectangle(4, 2) ); // xxxx, xxxx
-// console.log( [4, 2], hasUndefinedRectangle(2, 2) ); // xxxx, xxxx
+// console.log( [2, 4], hasUndefinedRectangle(4, 2) ); // xxxx, xxxx
+console.log( [4, 2], hasUndefinedRectangle(2, 2) ); // xxxx, xxxx
