@@ -6,7 +6,7 @@
 // 3 items 3cm in 1cm (called G3)
 // And a 1cm in 1cm item (called G4)
 
-// const
+// ====================== const
 const MAT = [];
 const MAIN_BOX = {
     W: 10,
@@ -25,12 +25,12 @@ const MAX_BOX = {
 // console.log(left_w);
 // console.log(left_h);
 
-// functions
+// ====================== functions
 (() => {
     for (let i = 0; i < MAIN_BOX.H; i++) {
         MAT[i] = [];
         for (let j = 0; j < MAIN_BOX.W; j++) {
-            MAT[i][j] = undefined;
+            MAT[i][j] = null;
         }
     }
 })();
@@ -71,10 +71,7 @@ const calculate = () => {
 
     const looking_for_size = (size) => {
         // we are looking for rectangles with `size[0]` as width and `size[1]` as height in MAT (matrix) they are UNDEFINED fields
-        for (let i = 0; i < MAT.length; i += size[1]) {
-            for (let j = 0; j < MAT[i].length; j += size[0]) {
-            }
-        }
+
     };
 
     // colorize all possible boxs with `sizes` size
@@ -95,7 +92,7 @@ const print = () => {
     for (let i = 0; i < MAT.length; i++) {
         console.log("\t<tr>");
         for (let j = 0; j < MAT[0].length; j++) {
-            if (MAT[i][j] === undefined) {
+            if (MAT[i][j] === null) {
                 console.log("\t\t<td>N</td>");
             } else {
                 console.log("\t\t<td style=\"background-color: " + MAT[i][j] + "\"></td>");
@@ -107,14 +104,14 @@ const print = () => {
 };
 
 
-const has_undefined_rectangle = (width, height) => {
+const has_null_rectangle = (width, height) => {
     console.log(MAT);
 
     for (let i = 0; i < MAT.length; i += height) {
         for (let j = 0; j < MAT[i].length; j += width) {
-            if (MAT[i][j] !== undefined) continue;
+            if (MAT[i][j] !== null) continue;
 
-            let has_undefined = true;
+            let has_null = true;
             let count_i = 0;
             let count_j = 0;
             while (count_j < width) {
@@ -124,15 +121,15 @@ const has_undefined_rectangle = (width, height) => {
                 while (count_i <= height) {
                     if (i + count_i >= MAT.length || j + count_j >= MAT[i].length) {
                         console.log("\tbreak");
-                        has_undefined = false;
+                        has_null = false;
                         break;
                     }
 
                     console.log(`\ti: ${count_i} <= ${height}`);
                     console.log("\t", i + count_i, j + count_j, MAT[i + count_i][j + count_j]);
-                    if (MAT[i + count_i][j + count_j] !== undefined) {
+                    if (MAT[i + count_i][j + count_j] !== null) {
                         console.log("\tbreak");
-                        has_undefined = false;
+                        has_null = false;
                         break;
                     }
                     count_i++;
@@ -140,8 +137,8 @@ const has_undefined_rectangle = (width, height) => {
                 count_j++;
             }
 
-            if (has_undefined === true) {
-                console.log("found undefined rectangle");
+            if (has_null === true) {
+                console.log("found null rectangle");
                 return true;
             }
         }
@@ -214,7 +211,7 @@ const cropMatrix = (w, h, width, height) => {
     for (let i = 0; i < height; i++) {
         arr.push([]);
         for (let j = 0; j < width; j++) {
-            if (MAT[h + i][w + j] === undefined) return null;
+            if (MAT[h + i][w + j] === null) return null;
             arr[i].push(MAT[h + i][w + j]);
         }
     }
@@ -245,14 +242,18 @@ const hasUndefinedRectangle = (width, height) => {
     return false;
 };
 
-// init
+// ====================== init
 calculate();
-// print();
 
-// console.log(has_undefined_rectangle(3, 1));
-// console.log(has_undefined_rectangle(1, 3));
+// console.log(has_null_rectangle(3, 1));
+// console.log(has_null_rectangle(1, 3));
 
 console.log( [2, 2], hasUndefinedRectangle(2, 2) ); // xx, xx
 console.log( [2, 4], hasUndefinedRectangle(2, 4) ); // xx, xx, xx, xx
 console.log( [2, 4], hasUndefinedRectangle(4, 2) ); // xxxx, xxxx
 console.log( [4, 2], hasUndefinedRectangle(2, 2) ); // xxxx, xxxx
+
+console.log( [1, 3], hasUndefinedRectangle(1, 3) ); // xxx
+console.log( [3, 1], hasUndefinedRectangle(3, 1) ); // x, x, x
+
+// print();
