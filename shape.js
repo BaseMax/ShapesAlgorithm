@@ -77,7 +77,6 @@ const calculate = () => {
 
             for (let k = 0; k < MAX_BOX.H; k++) {
                 for (let l = 0; l < MAX_BOX.W; l++) {
-                    // console.log(i + k, j + l);
                     MAT[i + k][j + l] = color;
                 }
             }
