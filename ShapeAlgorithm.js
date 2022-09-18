@@ -9,11 +9,11 @@
 
 class ShapeAlgorithm {
     constructor() {
-        this.main_box = {
+        this.window = {
             w: 14,
             h: 8
         };
-        this.max_box = {
+        this.biggest_box = {
             w: 3,
             h: 3
         };
@@ -30,18 +30,18 @@ class ShapeAlgorithm {
     }
 
     initMat() {
-        for (let i = 0; i < this.main_box.h; i++) {
+        for (let i = 0; i < this.window.h; i++) {
             this.mat[i] = [];
-            for (let j = 0; j < this.main_box.w; j++) {
+            for (let j = 0; j < this.window.w; j++) {
                 this.mat[i][j] = null;
             }
         }
     }
 
     initSizes() {
-        for (let i = this.max_box.h; i >= 1; i--) {
-            for (let j = this.max_box.w; j >= 1; j--) {
-                if (i === this.max_box.h && j === this.max_box.w) continue;
+        for (let i = this.biggest_box.h; i >= 1; i--) {
+            for (let j = this.biggest_box.w; j >= 1; j--) {
+                if (i === this.biggest_box.h && j === this.biggest_box.w) continue;
 
                 this.sizes.push([j, i]);
             }
@@ -88,16 +88,16 @@ class ShapeAlgorithm {
     }
 
     calculate() {
-        // colorize all possible this.max_box.w * this.max_box.h items iterate
-        for (let i = 0; i < this.mat.length; i += this.max_box.h) {
-            for (let j = 0; j < this.mat[i].length; j += this.max_box.w) {
-                if (j >= this.main_box.w || i >= this.main_box.h || j+this.max_box.w >= this.main_box.w || i+this.max_box.h >= this.main_box.h) break;
+        // colorize all possible this.biggest_box.w * this.biggest_box.h items iterate
+        for (let i = 0; i < this.mat.length; i += this.biggest_box.h) {
+            for (let j = 0; j < this.mat[i].length; j += this.biggest_box.w) {
+                if (j >= this.window.w || i >= this.window.h || j+this.biggest_box.w >= this.window.w || i+this.biggest_box.h >= this.window.h) break;
 
                 const color = this.randomColor();
-                this.colors[`${this.max_box.w}_${this.max_box.h}`] = 1;
+                this.colors[`${this.biggest_box.w}_${this.biggest_box.h}`] = 1;
 
-                for (let k = 0; k < this.max_box.h; k++) {
-                    for (let l = 0; l < this.max_box.w; l++) {
+                for (let k = 0; k < this.biggest_box.h; k++) {
+                    for (let l = 0; l < this.biggest_box.w; l++) {
                         this.mat[i + k][j + l] = {
                             "color": color,
                             "name": 1
@@ -107,7 +107,7 @@ class ShapeAlgorithm {
             }
         }
 
-        // colorize all possible box smaller than this.max_box.w and this.max_box.h
+        // colorize all possible box smaller than this.biggest_box.w and this.biggest_box.h
         const lookingForSize = (size) => {
             // we are looking for rectangles with `size[0]` as width and `size[1]` as height in this.mat (matrix) they are UNDEFINED fields
             const res = this.hasUndefinedRectangle(size[0], size[1]);
@@ -166,6 +166,13 @@ class ShapeAlgorithm {
         return res;
     }
 
+    draw(elm) {
+        if (!elm) {
+            console.error("No element to draw");
+        }
+        elm.innerHTML = this.print();
+    }
+
     getColors() {
         return this.colors;
     }
@@ -179,11 +186,11 @@ class ShapeAlgorithm {
     }
 
     getMainBox() {
-        return this.main_box;
+        return this.window;
     }
 
     getMaxBox() {
-        return this.max_box;
+        return this.biggest_box;
     }
 
     getMatSize() {
@@ -194,6 +201,7 @@ class ShapeAlgorithm {
     }
 }
 
-const shape = new ShapeAlgorithm();
-shape.calculate();
-console.log(shape.print());
+// =================== Example
+// const shape = new ShapeAlgorithm();
+// shape.calculate();
+// console.log(shape.print());
