@@ -92,13 +92,13 @@ const calculate = () => {
     };
 
     // colorize all possible boxs with `sizes` size
-    for (let i = 0; i < sizes.length; i++) {
-        const size = sizes[i];
+    // for (let i = 0; i < sizes.length; i++) {
+    //     const size = sizes[i];
 
-        // looking for possible boxs with `size` size
-        // if there are undefiend with `size`, so we can generate a random color and fill that.
-        looking_for_size(size);
-    }
+    //     // looking for possible boxs with `size` size
+    //     // if there are undefiend with `size`, so we can generate a random color and fill that.
+    //     looking_for_size(size);
+    // }
 };
 
 const print = () => {
@@ -119,114 +119,12 @@ const print = () => {
     console.log("</table>");
 };
 
-const has_null_rectangle = (width, height) => {
-    console.log(MAT);
-
-    for (let i = 0; i < MAT.length; i += height) {
-        for (let j = 0; j < MAT[i].length; j += width) {
-            if (MAT[i][j] !== null) continue;
-
-            let has_null = true;
-            let count_i = 0;
-            let count_j = 0;
-            while (count_j < width) {
-                count_i = 1;
-                console.log(`\nj: ${count_j} <= ${width}`);
-
-                while (count_i <= height) {
-                    if (i + count_i >= MAT.length || j + count_j >= MAT[i].length) {
-                        console.log("\tbreak");
-                        has_null = false;
-                        break;
-                    }
-
-                    console.log(`\ti: ${count_i} <= ${height}`);
-                    console.log("\t", i + count_i, j + count_j, MAT[i + count_i][j + count_j]);
-                    if (MAT[i + count_i][j + count_j] !== null) {
-                        console.log("\tbreak");
-                        has_null = false;
-                        break;
-                    }
-                    count_i++;
-                }
-                count_j++;
-            }
-
-            if (has_null === true) {
-                console.log("found null rectangle");
-                return true;
-            }
-        }
-    }
-
-    return false;
-};
-
-const hasUndefinedRectangle2 = (width, height) => {
-    let h = 0;
-    let w = 2;
-
-    // for (let h = 0; h < MAT.length; h++) {
-    //     for (let w = 0; w < MAT[0].length; w++) {
-            // if (MAT[h][w] !== null) continue;
-            let hasUndefined = false;
-
-            let count_w = 1;
-            let count_h = 1;
-            while (count_w <= width) {
-                count_h = 1;
-                if (MAT[h][w + count_w -1] !== null) continue;
-                console.log("w: ", count_w, "<=", width, MAT[h][w + count_w -1]);
-
-                while (count_h <= height) {
-                    if (MAT[h + count_h -1][w + count_w -1] !== null) {
-                        hasUndefined = false;
-                        break;
-                    }
-                    console.log("h: ", count_h, "<=", height, MAT[h + count_h -1][w + count_w -1]);
-                    count_h++;
-                }
-
-                if (count_h - 1 !== height) {
-                    hasUndefined = false;
-                    break;
-                }
-                count_w++;
-
-                // while (count_h <= height) {
-                //     if (h + count_h >= MAT.length || w + count_w >= MAT[0].length) {
-                //         hasUndefined = false;
-                //         break;
-                //     }
-                //     if (MAT[h + count_h][w + count_w] !== null) {
-                //         hasUndefined = false;
-                //         break;
-                //     }
-                //     count_h++;
-                // }
-            }
-
-            console.log([count_h - 1, count_w - 1]);
-            if (count_h - 1 === height && count_w - 1 === width) {
-                return true;
-            }
-
-            // console.log([h, w], hasUndefined);
-            // if (hasUndefined === true) {
-            //     return true;
-            // }
-    //     }
-    // }
-
-    return false;
-};
-
 const cropMatrix = (w, h, width, height) => {
     const arr = [];
     for (let i = 0; i < height; i++) {
         arr.push([]);
         for (let j = 0; j < width; j++) {
-            if (MAT[h + i][w + j] === null) return null;
+            if (MAT[h + i][w + j] === undefined) return null;
             arr[i].push(MAT[h + i][w + j]);
         }
     }
