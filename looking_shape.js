@@ -5,7 +5,7 @@ const matrix = [
     [4, 8, null, null],
 ];
 
-const hasUndefinedRectangle = (width, height) => {
+const hasUndefinedRectangle2 = (width, height) => {
     let h = 0;
     let w = 2;
 
@@ -64,7 +64,41 @@ const hasUndefinedRectangle = (width, height) => {
     return false;
 };
 
+const cropMatrix = (w, h, width, height) => {
+    const arr = [];
+    for (let i = 0; i < height; i++) {
+        arr.push([]);
+        for (let j = 0; j < width; j++) {
+            if (matrix[h + i][w + j] === undefined) return null;
+            arr[i].push(matrix[h + i][w + j]);
+        }
+    }
+    return arr;
+};
+
+const hasUndefinedRectangle = (width, height) => {
+    for (let h = 0; h < matrix.length; h++) {
+        for (let w = 0; w < matrix[0].length; w++) {
+            if (matrix[h][w] !== null) continue;
+
+            const arr = cropMatrix(w, h, width, height);
+            if (arr === null) {
+                continue;
+            }
+
+            // if all values in arr is null
+            // console.log(arr);
+            if (arr.every((row) => row.every((value) => value === null))) {
+                return true;
+            }
+        }
+    }
+
+    return false;
+};
+
 console.log(matrix);
-// console.log( [2, 2], hasUndefinedRectangle(2, 2) );
-// console.log( [2, 4], hasUndefinedRectangle(2, 4) );
-console.log( [4, 2], hasUndefinedRectangle(4, 2) );
+// console.log( [2, 2], hasUndefinedRectangle(2, 2) ); // xx, xx
+// console.log( [2, 4], hasUndefinedRectangle(2, 4) ); // xx, xx, xx, xx
+console.log( [2, 4], hasUndefinedRectangle(4, 2) ); // xxxx, xxxx
+// console.log( [4, 2], hasUndefinedRectangle(2, 2) ); // xxxx, xxxx
