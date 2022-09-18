@@ -110,11 +110,6 @@ const print = () => {
 calculate();
 // print();
 
-
-
-
-
-
 function has_undefined_rectangle(width, height)
 {
     console.log(MAT);
