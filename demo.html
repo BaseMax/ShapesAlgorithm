@@ -11,16 +11,16 @@
     <p>Enter a number to see the result.</p>
     <hr>
 
-    <label>Width of main window:</label>
+    <label>Width of the main window:</label>
     <input id="window_width" type="number" pattern="[0-9]+">
     <br>
 
-    <label>Height of main window:</label>
+    <label>Height of the main window:</label>
     <input id="window_height" type="number" pattern="[0-9]+">
     <br>
 
     <label>Width of biggest box:</label>
-    <input id="biggest_box_height" type="number" pattern="[0-9]+">
+    <input id="biggest_box_width" type="number" pattern="[0-9]+">
     <br>
 
     <label>Height of biggest box:</label>
@@ -28,25 +28,29 @@
     <br>
 
     <button id="button">Preview</button>
+    <br>
 
     <div id="output"></div>
 
     <script type="text/javascript" src="ShapeAlgorithm.js"></script>
     <script type="text/javascript">
+    // Elements
     const elm_window_width = document.querySelector("#window_width");
     const elm_window_height = document.querySelector("#window_height");
-    const elm_biggest_box_height = document.querySelector("#biggest_box_height");
+    const elm_biggest_box_width = document.querySelector("#biggest_box_width");
     const elm_biggest_box_height = document.querySelector("#biggest_box_height");
     const elm_button = document.querySelector("#button");
     const elm_output = document.querySelector("#output");
 
+    // Events
     elm_button.addEventListener("click", () => {
-        const window_width = elm_window_width.value;
-        const window_height = elm_window_height.value;
-        const biggest_box_width = elm_biggest_box_width.value;
-        const biggest_box_height = elm_biggest_box_height.value;
+        const window_width = parseInt(elm_window_width.value);
+        const window_height = parseInt(elm_window_height.value);
+        const biggest_box_width = parseInt(elm_biggest_box_width.value);
+        const biggest_box_height = parseInt(elm_biggest_box_height.value);
 
         const shape = new ShapeAlgorithm(window_width, window_height, biggest_box_width, biggest_box_height);
+        shape.calculate();
         shape.draw(elm_output);
     });
     </script>
