@@ -86,22 +86,23 @@ class ShapeAlgorithm {
     }
 
     calculate() {
+        this.labels[`${this.biggest_box.w}_${this.biggest_box.h}`] = {
+            "name": 1,
+            "quantity": 0
+        };
+
         // colorize all possible this.biggest_box.w * this.biggest_box.h items iterate
         for (let i = 0; i < this.matrix.length; i += this.biggest_box.h) {
             for (let j = 0; j < this.matrix[0].length; j += this.biggest_box.w) {
                 if (j > this.window.w || i > this.window.h || j + this.biggest_box.w > this.window.w || i + this.biggest_box.h > this.window.h) break;
 
-                this.labels[`${this.biggest_box.w}_${this.biggest_box.h}`] = {
-                    "name": 1,
-                    "quantity": 0
-                };
+                this.labels[`${this.biggest_box.w}_${this.biggest_box.h}`].quantity++;
+                console.log("quantity++");
 
                 const color = this.randomColor();
 
                 for (let k = 0; k < this.biggest_box.h; k++) {
                     for (let l = 0; l < this.biggest_box.w; l++) {
-                        this.labels[`${this.biggest_box.w}_${this.biggest_box.h}`].quantity++;
-
                         this.matrix[i + k][j + l] = {
                             "color": color,
                             "name": 1
