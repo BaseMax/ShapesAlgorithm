@@ -107,11 +107,11 @@ class ShapeAlgorithm {
 
         // colorize all possible box smaller than this.biggest_box.w and this.biggest_box.h
         const lookingForSize = (size) => {
-            // we are looking for rectangles with `size[0]` as width and `size[1]` as height in this.matrix (matrix) they are UNDEFINED fields
+            // we are looking for rectangles with `size[0]` as width and `size[1]` as height in this.matrix (matrix) they are NULL fields
             const res = this.hasUndefinedRectangle(size[0], size[1]);
             
             if (res !== false) {
-                // we found a rectangle with `size[0]` as width and `size[1]` as height in this.matrix (matrix) they are UNDEFINED fields
+                // we found a rectangle with `size[0]` as width and `size[1]` as height in this.matrix (matrix) they are NULL fields
                 // now we should fill them with a color
                 const color = this.randomColor();
                 if (!this.labels[`${size[0]}_${size[1]}`]) {
