@@ -1,4 +1,5 @@
 // Max Base
+// https://github.com/BaseMax/ShapesAlgorithm
 // 2022/09/18
 
 // 9 items 3cm in 3cm (called G1)
@@ -17,14 +18,6 @@ const MAX_BOX = {
     H: 3
 };
 
-// const number_max_box = Math.floor(MAIN_BOX.W / MAX_BOX.W) * Math.floor(MAIN_BOX.H / MAX_BOX.H);
-// const left_w = MAIN_BOX.W - number_max_box * MAX_BOX.W;
-// const left_h = MAIN_BOX.H - number_max_box * MAX_BOX.H;
-
-// console.log(number_max_box);
-// console.log(left_w);
-// console.log(left_h);
-
 // ====================== functions
 (() => {
     for (let i = 0; i < MAIN_BOX.H; i++) {
@@ -38,6 +31,40 @@ const MAX_BOX = {
 const random_color = () => {
     // random hex color
     return "#" + Math.floor(Math.random() * 16777215).toString(16);
+};
+
+const cropMatrix = (w, h, width, height) => {
+    const arr = [];
+    for (let i = 0; i < height; i++) {
+        arr.push([]);
+        for (let j = 0; j < width; j++) {
+            if (MAT[h + i] === undefined || MAT[h + i][w + j] === undefined) return null;
+            arr[i].push(MAT[h + i][w + j]);
+        }
+    }
+    return arr;
+};
+
+const hasUndefinedRectangle = (width, height) => {
+    for (let h = 0; h < MAT.length; h++) {
+        for (let w = 0; w < MAT[0].length; w++) {
+            if (MAT[h][w] !== null) continue;
+
+            const arr = cropMatrix(w, h, width, height);
+            if (arr === null) continue;
+
+            if (arr.every((row) => row.every((value) => value === null))) {
+                return {
+                    x: w,
+                    y: h,
+                    sx: width,
+                    xy: height
+                };
+            }
+        }
+    }
+
+    return false;
 };
 
 const calculate = () => {
@@ -57,8 +84,6 @@ const calculate = () => {
         }
     }
 
-    // console.log(MAT);
-
     // colorize all possible box smaller than MAX_BOX.W and MAX_BOX.H
     const sizes = [];
     for (let i = MAX_BOX.H; i >= 1; i--) {
@@ -69,22 +94,21 @@ const calculate = () => {
         }
     }
 
-    // console.log(sizes);
-
     const looking_for_size = (size) => {
         // we are looking for rectangles with `size[0]` as width and `size[1]` as height in MAT (matrix) they are UNDEFINED fields
-        // console.log("Looking for:", size);
         const res = hasUndefinedRectangle(size[0], size[1]);
-        // console.log(res);
+        
         if (res !== false) {
             // we found a rectangle with `size[0]` as width and `size[1]` as height in MAT (matrix) they are UNDEFINED fields
             // now we should fill them with a color
             const color = random_color();
+
             for (let i = 0; i < size[1]; i++) {
                 for (let j = 0; j < size[0]; j++) {
                     MAT[res["y"] + i][res["x"] + j] = color;
                 }
             }
+
             return true;
         }
 
@@ -119,54 +143,6 @@ const print = () => {
     console.log("</table>");
 };
 
-const cropMatrix = (w, h, width, height) => {
-    const arr = [];
-    for (let i = 0; i < height; i++) {
-        arr.push([]);
-        for (let j = 0; j < width; j++) {
-            if (MAT[h + i] === undefined || MAT[h + i][w + j] === undefined) return null;
-            arr[i].push(MAT[h + i][w + j]);
-        }
-    }
-    return arr;
-};
-
-const hasUndefinedRectangle = (width, height) => {
-    for (let h = 0; h < MAT.length; h++) {
-        for (let w = 0; w < MAT[0].length; w++) {
-            if (MAT[h][w] !== null) continue;
-
-            const arr = cropMatrix(w, h, width, height);
-            if (arr === null) continue;
-            // console.log(arr);
-
-            // if all values in arr is null
-            if (arr.every((row) => row.every((value) => value === null))) {
-                return {
-                    x: w,
-                    y: h,
-                    sx: width,
-                    xy: height
-                };
-            }
-        }
-    }
-
-    return false;
-};
-
 // ====================== init
 calculate();
-
-// console.log(has_null_rectangle(3, 1));
-// console.log(has_null_rectangle(1, 3));
-
-// console.log( [2, 2], hasUndefinedRectangle(2, 2) ); // xx, xx
-// console.log( [2, 4], hasUndefinedRectangle(2, 4) ); // xx, xx, xx, xx
-// console.log( [2, 4], hasUndefinedRectangle(4, 2) ); // xxxx, xxxx
-// console.log( [4, 2], hasUndefinedRectangle(2, 2) ); // xxxx, xxxx
-
-// console.log( [1, 3], hasUndefinedRectangle(1, 3) ); // xxx
-// console.log( [3, 1], hasUndefinedRectangle(3, 1) ); // x, x, x
-
 print();
