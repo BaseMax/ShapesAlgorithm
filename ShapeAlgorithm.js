@@ -8,17 +8,17 @@
 // And a 1cm in 1cm item (called G4)
 
 class ShapeAlgorithm {
-    constructor() {
+    constructor(ww, wh, bw, bh) {
         this.window = {
-            w: 14,
-            h: 8
+            w: ww,
+            h: wh
         };
         this.biggest_box = {
-            w: 3,
-            h: 3
+            w: bw,
+            h: bh
         };
-        this.mat = [];
-        this.colors = [];
+        this.matrix = [];
+        this.labels = [];
         this.sizes = [];
 
         this.init();
@@ -31,9 +31,9 @@ class ShapeAlgorithm {
 
     initMat() {
         for (let i = 0; i < this.window.h; i++) {
-            this.mat[i] = [];
+            this.matrix[i] = [];
             for (let j = 0; j < this.window.w; j++) {
-                this.mat[i][j] = null;
+                this.matrix[i][j] = null;
             }
         }
     }
@@ -57,18 +57,18 @@ class ShapeAlgorithm {
         for (let i = 0; i < height; i++) {
             arr.push([]);
             for (let j = 0; j < width; j++) {
-                if (this.mat[h + i] === undefined || this.mat[h + i][w + j] === undefined) return null;
+                if (this.matrix[h + i] === undefined || this.matrix[h + i][w + j] === undefined) return null;
 
-                arr[i].push(this.mat[h + i][w + j]);
+                arr[i].push(this.matrix[h + i][w + j]);
             }
         }
         return arr;
     }
 
     hasUndefinedRectangle(width, height) {
-        for (let h = 0; h < this.mat.length; h++) {
-            for (let w = 0; w < this.mat[0].length; w++) {
-                if (this.mat[h][w] !== null) continue;
+        for (let h = 0; h < this.matrix.length; h++) {
+            for (let w = 0; w < this.matrix[0].length; w++) {
+                if (this.matrix[h][w] !== null) continue;
 
                 const arr = this.cropMatrix(w, h, width, height);
                 if (arr === null) continue;
@@ -89,16 +89,16 @@ class ShapeAlgorithm {
 
     calculate() {
         // colorize all possible this.biggest_box.w * this.biggest_box.h items iterate
-        for (let i = 0; i < this.mat.length; i += this.biggest_box.h) {
-            for (let j = 0; j < this.mat[i].length; j += this.biggest_box.w) {
+        for (let i = 0; i < this.matrix.length; i += this.biggest_box.h) {
+            for (let j = 0; j < this.matrix[i].length; j += this.biggest_box.w) {
                 if (j >= this.window.w || i >= this.window.h || j+this.biggest_box.w >= this.window.w || i+this.biggest_box.h >= this.window.h) break;
 
                 const color = this.randomColor();
-                this.colors[`${this.biggest_box.w}_${this.biggest_box.h}`] = 1;
+                this.labels[`${this.biggest_box.w}_${this.biggest_box.h}`] = 1;
 
                 for (let k = 0; k < this.biggest_box.h; k++) {
                     for (let l = 0; l < this.biggest_box.w; l++) {
-                        this.mat[i + k][j + l] = {
+                        this.matrix[i + k][j + l] = {
                             "color": color,
                             "name": 1
                         };
@@ -109,21 +109,21 @@ class ShapeAlgorithm {
 
         // colorize all possible box smaller than this.biggest_box.w and this.biggest_box.h
         const lookingForSize = (size) => {
-            // we are looking for rectangles with `size[0]` as width and `size[1]` as height in this.mat (matrix) they are UNDEFINED fields
+            // we are looking for rectangles with `size[0]` as width and `size[1]` as height in this.matrix (matrix) they are UNDEFINED fields
             const res = this.hasUndefinedRectangle(size[0], size[1]);
             
             if (res !== false) {
-                // we found a rectangle with `size[0]` as width and `size[1]` as height in this.mat (matrix) they are UNDEFINED fields
+                // we found a rectangle with `size[0]` as width and `size[1]` as height in this.matrix (matrix) they are UNDEFINED fields
                 // now we should fill them with a color
                 const color = this.randomColor();
-                if (!this.colors[`${size[0]}_${size[1]}`]) {
-                    this.colors[`${size[0]}_${size[1]}`] = Object.keys(this.colors).length + 1;
+                if (!this.labels[`${size[0]}_${size[1]}`]) {
+                    this.labels[`${size[0]}_${size[1]}`] = Object.keys(this.labels).length + 1;
                 }
-                const key = this.colors[`${size[0]}_${size[1]}`];
+                const key = this.labels[`${size[0]}_${size[1]}`];
 
                 for (let i = 0; i < size[1]; i++) {
                     for (let j = 0; j < size[0]; j++) {
-                        this.mat[res["y"] + i][res["x"] + j] = {
+                        this.matrix[res["y"] + i][res["x"] + j] = {
                             "color": color,
                             "name": key
                         };
@@ -150,13 +150,13 @@ class ShapeAlgorithm {
         let res = "";
 
         res += "<table border=\"2\">";
-        for (let i = 0; i < this.mat.length; i++) {
+        for (let i = 0; i < this.matrix.length; i++) {
             res += "\t<tr align=\"center\">";
-            for (let j = 0; j < this.mat[0].length; j++) {
-                if (this.mat[i][j] === null) {
+            for (let j = 0; j < this.matrix[0].length; j++) {
+                if (this.matrix[i][j] === null) {
                     res += "\t\t<td>N</td>";
                 } else {
-                    res += "\t\t<td style=\"background-color: " + this.mat[i][j].color + "\">" + this.mat[i][j].name + "</td>";
+                    res += "\t\t<td style=\"background-color: " + this.matrix[i][j].color + "\">" + this.matrix[i][j].name + "</td>";
                 }
             }
             res += "\t</tr>";
@@ -174,7 +174,7 @@ class ShapeAlgorithm {
     }
 
     getColors() {
-        return this.colors;
+        return this.labels;
     }
 
     getSizes() {
@@ -182,7 +182,7 @@ class ShapeAlgorithm {
     }
 
     getMat() {
-        return this.mat;
+        return this.matrix;
     }
 
     getMainBox() {
@@ -195,13 +195,13 @@ class ShapeAlgorithm {
 
     getMatSize() {
         return {
-            w: this.mat[0].length,
-            h: this.mat.length
+            w: this.matrix[0].length,
+            h: this.matrix.length
         };
     }
 }
 
 // =================== Example
-// const shape = new ShapeAlgorithm();
+// const shape = new ShapeAlgorithm(10, 10, 3, 3);
 // shape.calculate();
 // console.log(shape.print());
