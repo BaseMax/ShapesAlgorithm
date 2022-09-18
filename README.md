@@ -14,3 +14,5 @@ In a shape(rectangle or square) with width `n` and length `m`, We want to know h
 - 3 items 1cm in 3cm (called G2)
 - 3 items 3cm in 1cm (called G3)
 - And a 1cm in 1cm item (called G4)
+
+More about the problem: https://math.stackexchange.com/questions/4533522/how-to-calculate-number-of-shapes-inside-a-shape/4533998#4533998
