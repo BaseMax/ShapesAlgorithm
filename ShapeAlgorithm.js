@@ -91,12 +91,17 @@ class ShapeAlgorithm {
             for (let j = 0; j < this.matrix[0].length; j += this.biggest_box.w) {
                 if (j > this.window.w || i > this.window.h || j + this.biggest_box.w > this.window.w || i + this.biggest_box.h > this.window.h) break;
 
-                this.labels[`${this.biggest_box.w}_${this.biggest_box.h}`] = 1;
+                this.labels[`${this.biggest_box.w}_${this.biggest_box.h}`] = {
+                    "name": 1,
+                    "quantity": 0
+                };
 
                 const color = this.randomColor();
 
                 for (let k = 0; k < this.biggest_box.h; k++) {
                     for (let l = 0; l < this.biggest_box.w; l++) {
+                        this.labels[`${this.biggest_box.w}_${this.biggest_box.h}`].quantity++;
+
                         this.matrix[i + k][j + l] = {
                             "color": color,
                             "name": 1
@@ -115,9 +120,14 @@ class ShapeAlgorithm {
                 // we found a rectangle with `size[0]` as width and `size[1]` as height in this.matrix (matrix) they are NULL fields
                 // now we should fill them with a color
                 if (!this.labels[`${size[0]}_${size[1]}`]) {
-                    this.labels[`${size[0]}_${size[1]}`] = Object.keys(this.labels).length + 1;
+                    this.labels[`${size[0]}_${size[1]}`] = {
+                        "name": Object.keys(this.labels).length + 1,
+                        "quantity": 0
+                    };
                 }
+                this.labels[`${size[0]}_${size[1]}`].quantity++;
                 const key = this.labels[`${size[0]}_${size[1]}`];
+
 
                 const color = this.randomColor();
 
@@ -125,7 +135,7 @@ class ShapeAlgorithm {
                     for (let j = 0; j < size[0]; j++) {
                         this.matrix[res["y"] + i][res["x"] + j] = {
                             "color": color,
-                            "name": key
+                            "name": key.name
                         };
                     }
                 }
@@ -199,9 +209,28 @@ class ShapeAlgorithm {
             h: this.matrix.length
         };
     }
+
+    getQuantities() {
+        const res = [];
+
+        for (const key in this.labels) {
+            const keys = key.split("_");
+            const label = this.labels[key];
+
+            res.push({
+                "label": label.name,
+                "quantity": label.quantity,
+                "width": parseInt(keys[0]),
+                "height": parseInt(keys[1])
+            });
+        }
+
+        return res;
+    }
 }
 
 // =================== Example
 // const shape = new ShapeAlgorithm(10, 10, 3, 3);
 // shape.calculate();
 // console.log(shape.print());
+// console.log(shape.getQuantities());
