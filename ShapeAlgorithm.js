@@ -97,7 +97,6 @@ class ShapeAlgorithm {
                 if (j > this.window.w || i > this.window.h || j + this.biggest_box.w > this.window.w || i + this.biggest_box.h > this.window.h) break;
 
                 this.labels[`${this.biggest_box.w}_${this.biggest_box.h}`].quantity++;
-                console.log("quantity++");
 
                 const color = this.randomColor();
 
