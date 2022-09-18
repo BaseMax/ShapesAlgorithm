@@ -97,7 +97,7 @@ const calculate = () => {
 
         // looking for possible boxs with `size` size
         // if there are undefiend with `size`, so we can generate a random color and fill that.
-        looking_for_size(size);
+        while(looking_for_size(size) === true) {}
     }
 };
 
@@ -111,7 +111,7 @@ const print = () => {
             if (MAT[i][j] === null) {
                 console.log("\t\t<td>N</td>");
             } else {
-                console.log("\t\t<td style=\"background-color: " + MAT[i][j] + "\"></td>");
+                console.log("\t\t<td style=\"background-color: " + MAT[i][j] + "\">*</td>");
             }
         }
         console.log("\t</tr>");
@@ -169,4 +169,4 @@ calculate();
 // console.log( [1, 3], hasUndefinedRectangle(1, 3) ); // xxx
 // console.log( [3, 1], hasUndefinedRectangle(3, 1) ); // x, x, x
 
-// print();
+print();
