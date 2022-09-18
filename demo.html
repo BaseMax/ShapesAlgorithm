@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shape Algorithm</title>
+</head>
+<body>
+    <h1>Shape Algorithm</h1>
+    <p>Enter a number to see the result.</p>
+    <hr>
+
+    <label>Width of main window:</label>
+    <input id="main_width" type="number" pattern="[0-9]+">
+    <br>
+
+    <label>Height of main window:</label>
+    <input id="main_height" type="number" pattern="[0-9]+">
+    <br>
+
+    <label>Width of biggest box:</label>
+    <input id="max_height" type="number" pattern="[0-9]+">
+    <br>
+
+    <label>Height of biggest box:</label>
+    <input id="max_height" type="number" pattern="[0-9]+">
+    <br>
+
+    <button id="button">Preview</button>
+
+    <div id="output"></div>
+
+    <script type="text/javascript" src="ShapeAlgorithm.js"></script>
+    <script type="text/javascript">
+    const elm_main_width = document.querySelector("#main_width");
+    const elm_main_height = document.querySelector("#main_height");
+    const elm_max_height = document.querySelector("#max_height");
+    const elm_max_height = document.querySelector("#max_height");
+    const elm_button = document.querySelector("#button");
+    const elm_output = document.querySelector("#output");
+
+    elm_button.addEventListener("click", () => {
+        const main_width = elm_main_width.value;
+        const main_height = elm_main_height.value;
+        const max_width = elm_max_width.value;
+        const max_height = elm_max_height.value;
+
+        const shape = new ShapeAlgorithm(main_width, main_height, max_width, max_height);
+        shape.draw(elm_output);
+    });
+    </script>
+</body>
+</html>
