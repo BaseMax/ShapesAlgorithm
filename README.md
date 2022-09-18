@@ -1,8 +1,8 @@
-# Shapes Algorithm
+[![Shapes Algorithm JS](preview.jpg)](https://basemax.github.io/ShapesAlgorithm/demo.html)
 
 **Demo:** https://basemax.github.io/ShapesAlgorithm/demo.html
 
-[![Shapes Algorithm JS](preview.jpg)](https://basemax.github.io/ShapesAlgorithm/demo.html)
+# Shapes Algorithm
 
 ## About the algorithm
 
