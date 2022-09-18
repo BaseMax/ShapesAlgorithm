@@ -68,7 +68,7 @@
         for (let i = 0; i < quantities.length; i++) {
             const quantity = quantities[i];
             const elm_quantity = document.createElement("li");
-            elm_quantity.innerHTML = `${quantity.width}x${quantity.height} = ${quantity.quantity}`;
+            elm_quantity.innerHTML = `${quantity.width}x${quantity.height} = ${quantity.quantity} (labeled ${quantity.label})`;
             elm_quantities.appendChild(elm_quantity);
         }
     });
