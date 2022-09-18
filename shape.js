@@ -70,15 +70,19 @@ const hasUndefinedRectangle = (width, height) => {
 
 const calculate = () => {
     // colorize all possible MAX_BOX.W * MAX_BOX.H items iterate
-    const color = random_color();
-
     for (let i = 0; i < MAT.length; i += MAX_BOX.H) {
         for (let j = 0; j < MAT[i].length; j += MAX_BOX.W) {
             if (j >= MAIN_BOX.W || i >= MAIN_BOX.H || j+MAX_BOX.W >= MAIN_BOX.W || i+MAX_BOX.H >= MAIN_BOX.H) break;
 
+            const color = random_color();
+            COLORS[`${MAX_BOX.W}_${MAX_BOX.H}`] = 1;
+
             for (let k = 0; k < MAX_BOX.H; k++) {
                 for (let l = 0; l < MAX_BOX.W; l++) {
-                    MAT[i + k][j + l] = color;
+                    MAT[i + k][j + l] = {
+                        "color": color,
+                        "name": 1
+                    };
                 }
             }
         }
@@ -101,15 +105,18 @@ const calculate = () => {
         if (res !== false) {
             // we found a rectangle with `size[0]` as width and `size[1]` as height in MAT (matrix) they are UNDEFINED fields
             // now we should fill them with a color
-            let color;
+            const color = random_color();
             if (!COLORS[`${size[0]}_${size[1]}`]) {
-                COLORS[`${size[0]}_${size[1]}`] = random_color();
+                COLORS[`${size[0]}_${size[1]}`] = Object.keys(COLORS).length + 1;
             }
-            color = COLORS[`${size[0]}_${size[1]}`];
+            const key = COLORS[`${size[0]}_${size[1]}`];
 
             for (let i = 0; i < size[1]; i++) {
                 for (let j = 0; j < size[0]; j++) {
-                    MAT[res["y"] + i][res["x"] + j] = color;
+                    MAT[res["y"] + i][res["x"] + j] = {
+                        "color": color,
+                        "name": key
+                    };
                 }
             }
 
@@ -134,12 +141,12 @@ const print = () => {
 
     console.log("<table border=\"2\">");
     for (let i = 0; i < MAT.length; i++) {
-        console.log("\t<tr>");
+        console.log("\t<tr align=\"center\">");
         for (let j = 0; j < MAT[0].length; j++) {
             if (MAT[i][j] === null) {
                 console.log("\t\t<td>N</td>");
             } else {
-                console.log("\t\t<td style=\"background-color: " + MAT[i][j] + "\">*</td>");
+                console.log("\t\t<td style=\"background-color: " + MAT[i][j].color + "\">" + MAT[i][j].name + "</td>");
             }
         }
         console.log("\t</tr>");
