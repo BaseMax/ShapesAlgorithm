@@ -57,13 +57,15 @@ const calculate = () => {
         }
     }
 
+    console.log(MAT);
+
     // colorize all possible box smaller than MAX_BOX.W and MAX_BOX.H
     const sizes = [];
     for (let i = MAX_BOX.H; i >= 1; i--) {
         for (let j = MAX_BOX.W; j >= 1; j--) {
             if (i === MAX_BOX.H && j === MAX_BOX.W) continue;
 
-            sizes.push([i, j]);
+            sizes.push([j, i]);
         }
     }
 
@@ -71,7 +73,22 @@ const calculate = () => {
 
     const looking_for_size = (size) => {
         // we are looking for rectangles with `size[0]` as width and `size[1]` as height in MAT (matrix) they are UNDEFINED fields
+        console.log("Looking for:", size);
+        const res = hasUndefinedRectangle(size[0], size[1]);
+        console.log(res);
+        if (res !== false) {
+            // we found a rectangle with `size[0]` as width and `size[1]` as height in MAT (matrix) they are UNDEFINED fields
+            // now we should fill them with a color
+            const color = random_color();
+            for (let i = 0; i < size[1]; i++) {
+                for (let j = 0; j < size[0]; j++) {
+                    MAT[res[0] + i][res[1] + j] = color;
+                }
+            }
+            return true;
+        }
 
+        return false;
     };
 
     // colorize all possible boxs with `sizes` size
@@ -80,7 +97,6 @@ const calculate = () => {
 
         // looking for possible boxs with `size` size
         // if there are undefiend with `size`, so we can generate a random color and fill that.
-        console.log(size);
         looking_for_size(size);
     }
 };
@@ -102,7 +118,6 @@ const print = () => {
     }
     console.log("</table>");
 };
-
 
 const has_null_rectangle = (width, height) => {
     console.log(MAT);
@@ -248,10 +263,10 @@ calculate();
 // console.log(has_null_rectangle(3, 1));
 // console.log(has_null_rectangle(1, 3));
 
-console.log( [2, 2], hasUndefinedRectangle(2, 2) ); // xx, xx
-console.log( [2, 4], hasUndefinedRectangle(2, 4) ); // xx, xx, xx, xx
-console.log( [2, 4], hasUndefinedRectangle(4, 2) ); // xxxx, xxxx
-console.log( [4, 2], hasUndefinedRectangle(2, 2) ); // xxxx, xxxx
+// console.log( [2, 2], hasUndefinedRectangle(2, 2) ); // xx, xx
+// console.log( [2, 4], hasUndefinedRectangle(2, 4) ); // xx, xx, xx, xx
+// console.log( [2, 4], hasUndefinedRectangle(4, 2) ); // xxxx, xxxx
+// console.log( [4, 2], hasUndefinedRectangle(2, 2) ); // xxxx, xxxx
 
 console.log( [1, 3], hasUndefinedRectangle(1, 3) ); // xxx
 console.log( [3, 1], hasUndefinedRectangle(3, 1) ); // x, x, x
