@@ -1,11 +1,9 @@
-// Max Base
-// https://github.com/BaseMax/ShapesAlgorithm
-// 2022/09/18
-
-// 9 items 3cm in 3cm (called G1)
-// 3 items 1cm in 3cm (called G2)
-// 3 items 3cm in 1cm (called G3)
-// And a 1cm in 1cm item (called G4)
+/*
+ * Name: Shapes Algorithm
+ * Repository: https://github.com/BaseMax/ShapesAlgorithm
+ * Author: Max Base
+ * Date: 2022/09/18
+ */
 
 class ShapeAlgorithm {
     constructor(ww, wh, bw, bh) {
