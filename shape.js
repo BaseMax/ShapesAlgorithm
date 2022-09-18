@@ -57,7 +57,7 @@ const calculate = () => {
         }
     }
 
-    console.log(MAT);
+    // console.log(MAT);
 
     // colorize all possible box smaller than MAX_BOX.W and MAX_BOX.H
     const sizes = [];
@@ -69,20 +69,20 @@ const calculate = () => {
         }
     }
 
-    console.log(sizes);
+    // console.log(sizes);
 
     const looking_for_size = (size) => {
         // we are looking for rectangles with `size[0]` as width and `size[1]` as height in MAT (matrix) they are UNDEFINED fields
-        console.log("Looking for:", size);
+        // console.log("Looking for:", size);
         const res = hasUndefinedRectangle(size[0], size[1]);
-        console.log(res);
+        // console.log(res);
         if (res !== false) {
             // we found a rectangle with `size[0]` as width and `size[1]` as height in MAT (matrix) they are UNDEFINED fields
             // now we should fill them with a color
             const color = random_color();
             for (let i = 0; i < size[1]; i++) {
                 for (let j = 0; j < size[0]; j++) {
-                    MAT[res[0] + i][res[1] + j] = color;
+                    MAT[res["y"] + i][res["x"] + j] = color;
                 }
             }
             return true;
@@ -92,13 +92,13 @@ const calculate = () => {
     };
 
     // colorize all possible boxs with `sizes` size
-    // for (let i = 0; i < sizes.length; i++) {
-    //     const size = sizes[i];
+    for (let i = 0; i < sizes.length; i++) {
+        const size = sizes[i];
 
-    //     // looking for possible boxs with `size` size
-    //     // if there are undefiend with `size`, so we can generate a random color and fill that.
-    //     looking_for_size(size);
-    // }
+        // looking for possible boxs with `size` size
+        // if there are undefiend with `size`, so we can generate a random color and fill that.
+        looking_for_size(size);
+    }
 };
 
 const print = () => {
@@ -124,7 +124,7 @@ const cropMatrix = (w, h, width, height) => {
     for (let i = 0; i < height; i++) {
         arr.push([]);
         for (let j = 0; j < width; j++) {
-            if (MAT[h + i][w + j] === undefined) return null;
+            if (MAT[h + i] === undefined || MAT[h + i][w + j] === undefined) return null;
             arr[i].push(MAT[h + i][w + j]);
         }
     }
@@ -166,7 +166,7 @@ calculate();
 // console.log( [2, 4], hasUndefinedRectangle(4, 2) ); // xxxx, xxxx
 // console.log( [4, 2], hasUndefinedRectangle(2, 2) ); // xxxx, xxxx
 
-console.log( [1, 3], hasUndefinedRectangle(1, 3) ); // xxx
-console.log( [3, 1], hasUndefinedRectangle(3, 1) ); // x, x, x
+// console.log( [1, 3], hasUndefinedRectangle(1, 3) ); // xxx
+// console.log( [3, 1], hasUndefinedRectangle(3, 1) ); // x, x, x
 
 // print();
