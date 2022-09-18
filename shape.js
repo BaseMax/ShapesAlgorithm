@@ -9,9 +9,10 @@
 
 // ====================== const
 const MAT = [];
+const COLORS = [];
 const MAIN_BOX = {
-    W: 10,
-    H: 10
+    W: 14,
+    H: 8
 };
 const MAX_BOX = {
     W: 3,
@@ -69,11 +70,11 @@ const hasUndefinedRectangle = (width, height) => {
 
 const calculate = () => {
     // colorize all possible MAX_BOX.W * MAX_BOX.H items iterate
+    const color = random_color();
+
     for (let i = 0; i < MAT.length; i += MAX_BOX.H) {
         for (let j = 0; j < MAT[i].length; j += MAX_BOX.W) {
             if (j >= MAIN_BOX.W || i >= MAIN_BOX.H || j+MAX_BOX.W >= MAIN_BOX.W || i+MAX_BOX.H >= MAIN_BOX.H) break;
-
-            const color = random_color();
 
             for (let k = 0; k < MAX_BOX.H; k++) {
                 for (let l = 0; l < MAX_BOX.W; l++) {
@@ -100,7 +101,11 @@ const calculate = () => {
         if (res !== false) {
             // we found a rectangle with `size[0]` as width and `size[1]` as height in MAT (matrix) they are UNDEFINED fields
             // now we should fill them with a color
-            const color = random_color();
+            let color;
+            if (!COLORS[`${size[0]}_${size[1]}`]) {
+                COLORS[`${size[0]}_${size[1]}`] = random_color();
+            }
+            color = COLORS[`${size[0]}_${size[1]}`];
 
             for (let i = 0; i < size[1]; i++) {
                 for (let j = 0; j < size[0]; j++) {
