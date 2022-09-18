@@ -35,7 +35,7 @@
     <div id="output"></div>
     <br>
 
-    <b>Quantity of boxs:</b>
+    <b id="quantities_title" style="display: none;">Quantity of boxes:</b>
     <ul id="quantities"></ul>
 
     <script type="text/javascript" src="ShapeAlgorithm.js"></script>
@@ -48,6 +48,7 @@
     const elm_button = document.querySelector("#button");
     const elm_output = document.querySelector("#output");
     const elm_quantities = document.querySelector("#quantities");
+    const elm_quantities_title = document.querySelector("#quantities_title");
 
     // Events
     elm_button.addEventListener("click", () => {
@@ -63,7 +64,9 @@
         shape.draw(elm_output);
 
         // Quantities
+        quantities_title.style.display = "block";
         elm_quantities.innerHTML = "";
+
         const quantities = shape.getQuantities();
         for (let i = 0; i < quantities.length; i++) {
             const quantity = quantities[i];

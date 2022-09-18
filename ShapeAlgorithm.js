@@ -146,11 +146,11 @@ class ShapeAlgorithm {
             return false;
         };
 
-        // colorize all possible boxs with `sizes` size
+        // colorize all possible boxes with `sizes` size
         for (let i = 0; i < this.sizes.length; i++) {
             const size = this.sizes[i];
 
-            // looking for possible boxs with `size` size
+            // looking for possible boxes with `size` size
             // if there are undefiend with `size`, so we can generate a random color and fill that.
             while (lookingForSize(size) === true) {}
         }
