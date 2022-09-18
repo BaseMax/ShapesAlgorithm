@@ -25,11 +25,11 @@ class ShapeAlgorithm {
     }
 
     init() {
-        this.initMat();
+        this.initMatrix();
         this.initSizes();
     }
 
-    initMat() {
+    initMatrix() {
         for (let i = 0; i < this.window.h; i++) {
             this.matrix[i] = [];
             for (let j = 0; j < this.window.w; j++) {
