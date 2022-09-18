@@ -34,6 +34,8 @@
 
     <div id="output"></div>
 
+    <div id="quantities"></div>
+
     <script type="text/javascript" src="ShapeAlgorithm.js"></script>
     <script type="text/javascript">
     // Elements
@@ -43,6 +45,7 @@
     const elm_biggest_box_height = document.querySelector("#biggest_box_height");
     const elm_button = document.querySelector("#button");
     const elm_output = document.querySelector("#output");
+    const elm_quantities = document.querySelector("#quantities");
 
     // Events
     elm_button.addEventListener("click", () => {
@@ -53,7 +56,19 @@
 
         const shape = new ShapeAlgorithm(window_width, window_height, biggest_box_width, biggest_box_height);
         shape.calculate();
+
+        // Draw
         shape.draw(elm_output);
+
+        // Quantities
+        elm_quantities.innerHTML = "";
+        const quantities = shape.getQuantities();
+        for (let i = 0; i < quantities.length; i++) {
+            const quantity = quantities[i];
+            const elm_quantity = document.createElement("li");
+            elm_quantity.innerHTML = `${quantity.width}x${quantity.height} = ${quantity.quantity}`;
+            elm_quantities.appendChild(elm_quantity);
+        }
     });
     </script>
 </body>
