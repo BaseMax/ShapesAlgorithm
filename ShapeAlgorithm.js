@@ -18,6 +18,7 @@ class ShapeAlgorithm {
         this.matrix = [];
         this.labels = [];
         this.sizes = [];
+        this.positions = [];
 
         this.init();
     }
@@ -100,6 +101,14 @@ class ShapeAlgorithm {
 
                 const color = this.randomColor();
 
+                if (! this.positions[`${this.biggest_box.w}_${this.biggest_box.h}`]) this.positions[`${this.biggest_box.w}_${this.biggest_box.h}`] = [];
+                this.positions[`${this.biggest_box.w}_${this.biggest_box.h}`].push({
+                    "from_w": i + 1,
+                    "from_h": j + 1,
+                    "to_w": i + this.biggest_box.h,
+                    "to_h": j + this.biggest_box.w
+                });
+
                 for (let k = 0; k < this.biggest_box.h; k++) {
                     for (let l = 0; l < this.biggest_box.w; l++) {
                         this.matrix[i + k][j + l] = {
@@ -128,8 +137,15 @@ class ShapeAlgorithm {
                 this.labels[`${size[0]}_${size[1]}`].quantity++;
                 const key = this.labels[`${size[0]}_${size[1]}`];
 
-
                 const color = this.randomColor();
+
+                if (! this.positions[`${size[0]}_${size[1]}`]) this.positions[`${size[0]}_${size[1]}`] = [];
+                this.positions[`${size[0]}_${size[1]}`].push({
+                    "from_w": res["x"] + 1,
+                    "from_h": res["y"] + 1,
+                    "to_w": res["x"] + size[0],
+                    "to_h": res["y"] + size[1]
+                });
 
                 for (let i = 0; i < size[1]; i++) {
                     for (let j = 0; j < size[0]; j++) {
@@ -221,7 +237,8 @@ class ShapeAlgorithm {
                 "label": label.name,
                 "quantity": label.quantity,
                 "width": parseInt(keys[0]),
-                "height": parseInt(keys[1])
+                "height": parseInt(keys[1]),
+                "positions": this.positions[`${keys[0]}_${keys[1]}`]
             });
         }
 
