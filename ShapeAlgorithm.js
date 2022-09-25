@@ -18,7 +18,7 @@ class ShapeAlgorithm {
         this.matrix = [];
         this.labels = [];
         this.sizes = [];
-        this.positions = [];
+        this.positions = {};
 
         this.init();
     }
