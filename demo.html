@@ -68,15 +68,13 @@
         quantities_title.style.display = "block";
 
         const quantities = shape.getQuantities();
-        console.log(quantities);
         for (let i = 0; i < quantities.length; i++) {
             const quantity = quantities[i];
             const elm_quantity = document.createElement("li");
-            elm_quantity.innerHTML = `${quantity.width}x${quantity.height} = ${quantity.quantity} (labeled ${quantity.label})`;
+            elm_quantity.innerHTML = `<b>${quantity.width}x${quantity.height} = ${quantity.quantity} (labeled ${quantity.label})</b>`;
             
             const ul = document.createElement("ul");
             for (let position of quantity.positions) {
-                console.log(position);
                 const ul_item = document.createElement("li");
                 ul_item.innerHTML = `(${position.from_w}, ${position.from_h}) => (${position.to_w}, ${position.to_h})`;
 
